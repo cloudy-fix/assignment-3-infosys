@@ -1,0 +1,12 @@
+﻿fastapi
+uvicorn
+pydantic
+python-dotenv
+python-multipart
+PyPDF2
+requests
+streamlit
+pandas
+plotly
+chromadb
+

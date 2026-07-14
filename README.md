@@ -27,3 +27,12 @@ This project is a good follow-up discussion point after the first compliance che
 - Add architecture notes comparing V1 and V2.
 - Add sample contracts with safe dummy data.
 - Add screenshots or CLI/API examples for quick review.
+
+## Production Documentation
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [Operations Guide](docs/OPERATIONS.md)
+- [Architecture Diagram](docs/diagrams/architecture.mmd)
+- [Workflow Diagram](docs/diagrams/workflow.mmd)
+- [Security Policy](SECURITY.md)
+- [Contributing Guide](CONTRIBUTING.md)

@@ -1,0 +1,23 @@
+﻿name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  python-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate Python syntax
+        run: |
+          python -m compileall . -q
+      - name: Validate project structure
+        run: |
+          test -f README.md
+          test -f docs/ARCHITECTURE.md
+          test -f docs/diagrams/architecture.mmd
+          test -f docs/diagrams/workflow.mmd
