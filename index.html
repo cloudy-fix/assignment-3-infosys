@@ -3,606 +3,101 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Infosys Compliance Checker V2 | Project Showcase</title>
-  <meta name="description" content="A second-version compliance checker that builds on the RAG workflow with clearer production documentation and interview-ready system framing.">
+  <title>Infosys Compliance Checker V2 | Live Project</title>
+  <meta name="description" content="A cleaner V2 compliance checker surface focused on document analysis, LLM-assisted review, and risk-focused contract interpretation.">
   <meta name="theme-color" content="#0891b2">
-  <style>
-    :root {
-      --accent: #0891b2;
-      --accent-two: #dc2626;
-      --ink: #101828;
-      --muted: #5b6472;
-      --line: rgba(16, 24, 40, 0.12);
-      --panel: rgba(255, 255, 255, 0.78);
-      --panel-strong: rgba(255, 255, 255, 0.92);
-      --surface: #f6f8fb;
-      --dark: #141821;
-      --dark-soft: #202635;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink);
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(246, 248, 251, 0.9)),
-        radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 28rem),
-        radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--accent-two) 22%, transparent), transparent 24rem),
-        var(--surface);
-      min-height: 100vh;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    .site-shell {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .topbar {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      font-weight: 800;
-    }
-
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      background:
-        linear-gradient(135deg, var(--accent), var(--accent-two));
-      box-shadow: 0 16px 36px color-mix(in srgb, var(--accent) 30%, transparent);
-    }
-
-    .nav-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 10px;
-    }
-
-    .nav-links a,
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 40px;
-      padding: 0 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.66);
-      color: var(--ink);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.95rem;
-      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
-    }
-
-    .nav-links a:hover,
-    .button:hover {
-      transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
-      background: rgba(255, 255, 255, 0.9);
-    }
-
-    .hero {
-      min-height: 86vh;
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-      align-items: center;
-      gap: 48px;
-      padding: 56px 0 42px;
-    }
-
-    .eyebrow {
-      margin: 0 0 18px;
-      color: var(--accent);
-      font-size: 0.9rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0;
-    }
-
-    h1 {
-      margin: 0;
-      max-width: 760px;
-      font-size: 4rem;
-      line-height: 0.98;
-      letter-spacing: 0;
-    }
-
-    .summary {
-      margin: 24px 0 0;
-      max-width: 700px;
-      color: var(--muted);
-      font-size: 1.15rem;
-      line-height: 1.8;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 30px;
-    }
-
-    .button.primary {
-      border-color: transparent;
-      background: linear-gradient(135deg, var(--accent), var(--accent-two));
-      color: white;
-      box-shadow: 0 18px 40px color-mix(in srgb, var(--accent) 28%, transparent);
-    }
-
-    .meta-strip {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 32px;
-      max-width: 760px;
-    }
-
-    .meta-card {
-      min-height: 94px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 18px 48px rgba(16, 24, 40, 0.08);
-    }
-
-    .meta-card span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0;
-    }
-
-    .meta-card strong {
-      display: block;
-      margin-top: 8px;
-      font-size: 1rem;
-      line-height: 1.4;
-    }
-
-    .visual-wrap {
-      position: relative;
-      min-height: 470px;
-      display: grid;
-      place-items: center;
-      perspective: 1100px;
-    }
-
-    .halo {
-      position: absolute;
-      inset: 6%;
-      border: 1px solid rgba(255, 255, 255, 0.72);
-      border-radius: 8px;
-      background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.2)),
-        linear-gradient(45deg, color-mix(in srgb, var(--accent) 12%, transparent), color-mix(in srgb, var(--accent-two) 12%, transparent));
-      box-shadow: 0 32px 80px rgba(16, 24, 40, 0.16);
-      transform: rotateX(62deg) rotateZ(-34deg);
-      transform-style: preserve-3d;
-    }
-
-    .glass-model {
-      position: relative;
-      width: 280px;
-      height: 280px;
-      transform-style: preserve-3d;
-      transform: rotateX(58deg) rotateZ(-34deg);
-      animation: floatModel 7s ease-in-out infinite;
-    }
-
-    .pane {
-      position: absolute;
-      inset: 0;
-      border: 1px solid rgba(255, 255, 255, 0.76);
-      border-radius: 8px;
-      background:
-        linear-gradient(140deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.16)),
-        linear-gradient(135deg, color-mix(in srgb, var(--accent) 24%, transparent), color-mix(in srgb, var(--accent-two) 20%, transparent));
-      box-shadow: 0 28px 70px rgba(16, 24, 40, 0.18);
-      backdrop-filter: blur(16px);
-    }
-
-    .pane.one {
-      transform: translateZ(70px);
-    }
-
-    .pane.two {
-      transform: translate3d(42px, 42px, 22px);
-    }
-
-    .pane.three {
-      transform: translate3d(-42px, -42px, -26px);
-      opacity: 0.72;
-    }
-
-    .model-label {
-      position: absolute;
-      left: 50%;
-      bottom: 38px;
-      width: min(320px, 86%);
-      transform: translateX(-50%);
-      padding: 14px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.62);
-      border-radius: 8px;
-      background: rgba(20, 24, 33, 0.86);
-      color: white;
-      box-shadow: 0 18px 48px rgba(16, 24, 40, 0.22);
-      backdrop-filter: blur(18px);
-    }
-
-    .model-label strong {
-      display: block;
-      font-size: 0.95rem;
-    }
-
-    .model-label span {
-      display: block;
-      margin-top: 6px;
-      color: rgba(255, 255, 255, 0.74);
-      line-height: 1.5;
-      font-size: 0.9rem;
-    }
-
-    @keyframes floatModel {
-      0%, 100% {
-        transform: rotateX(58deg) rotateZ(-34deg) translateY(0);
-      }
-      50% {
-        transform: rotateX(62deg) rotateZ(-29deg) translateY(-16px);
-      }
-    }
-
-    main section {
-      padding: 42px 0;
-    }
-
-    .section-title {
-      margin: 0 0 18px;
-      font-size: 2rem;
-      line-height: 1.2;
-      letter-spacing: 0;
-    }
-
-    .grid-two {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 18px;
-    }
-
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel-strong);
-      box-shadow: 0 20px 54px rgba(16, 24, 40, 0.08);
-      padding: 26px;
-    }
-
-    .panel p,
-    .panel li {
-      color: var(--muted);
-      line-height: 1.75;
-    }
-
-    .panel ul {
-      padding-left: 20px;
-      margin: 16px 0 0;
-    }
-
-    .stack-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .stack-list span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 34px;
-      padding: 0 12px;
-      border-radius: 8px;
-      border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
-      background: color-mix(in srgb, var(--accent) 9%, white);
-      color: var(--ink);
-      font-weight: 800;
-      font-size: 0.9rem;
-    }
-
-    .workflow {
-      display: grid;
-      gap: 12px;
-      list-style: none;
-      margin: 20px 0 0;
-      padding: 0;
-    }
-
-    .workflow li {
-      display: grid;
-      grid-template-columns: 62px minmax(0, 1fr);
-      align-items: stretch;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.74);
-    }
-
-    .workflow strong {
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--accent), var(--accent-two));
-      color: white;
-      font-size: 0.86rem;
-    }
-
-    .workflow span {
-      display: block;
-      padding: 15px 16px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .docs-band {
-      margin: 32px 0 52px;
-      padding: 28px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--dark), var(--dark-soft));
-      color: white;
-      box-shadow: 0 24px 70px rgba(16, 24, 40, 0.18);
-    }
-
-    .docs-band h2 {
-      margin: 0 0 14px;
-      font-size: 1.65rem;
-      letter-spacing: 0;
-    }
-
-    .docs-band p {
-      max-width: 780px;
-      color: rgba(255, 255, 255, 0.72);
-      line-height: 1.75;
-      margin: 0 0 20px;
-    }
-
-    .doc-links {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .doc-links a {
-      min-height: 78px;
-      display: flex;
-      align-items: center;
-      padding: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 8px;
-      color: white;
-      background: rgba(255, 255, 255, 0.08);
-      text-decoration: none;
-      font-weight: 800;
-      line-height: 1.4;
-      transition: transform 180ms ease, background 180ms ease;
-    }
-
-    .doc-links a:hover {
-      transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.14);
-    }
-
-    .footer {
-      padding: 26px 0 44px;
-      color: var(--muted);
-      font-size: 0.95rem;
-      border-top: 1px solid var(--line);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 1ms !important;
-        scroll-behavior: auto !important;
-        transition-duration: 1ms !important;
-      }
-    }
-
-    @media (max-width: 940px) {
-      .hero,
-      .grid-two {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        min-height: auto;
-        padding-top: 34px;
-      }
-
-      .visual-wrap {
-        min-height: 380px;
-      }
-
-      .doc-links,
-      .meta-strip {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .site-shell {
-        width: min(100% - 22px, 1180px);
-      }
-
-      .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-        padding: 16px 0;
-      }
-
-      .nav-links {
-        justify-content: flex-start;
-      }
-
-      h1 {
-        font-size: 2.45rem;
-        line-height: 1.06;
-      }
-
-      .summary {
-        font-size: 1rem;
-      }
-
-      .meta-strip,
-      .doc-links {
-        grid-template-columns: 1fr;
-      }
-
-      .visual-wrap {
-        min-height: 330px;
-      }
-
-      .glass-model {
-        width: 210px;
-        height: 210px;
-      }
-
-      .panel,
-      .docs-band {
-        padding: 20px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-  <header class="site-shell topbar">
-    <a class="brand" href="https://cloudy-fix.github.io/assignment-3-infosys/" aria-label="Infosys Compliance Checker V2 showcase home">
+  <header class="shell topbar">
+    <a class="brand" href="./" aria-label="Project home">
       <span class="brand-mark" aria-hidden="true"></span>
-      <span>Infosys Compliance Checker V2</span>
+      <span id="brand-title">Infosys Compliance Checker V2</span>
     </a>
-    <nav class="nav-links" aria-label="Project links">
-      <a href="https://github.com/cloudy-fix/assignment-3-infosys">Repository</a>
-      <a href="https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/ARCHITECTURE.md">Architecture</a>
-      <a href="https://cloudy-fix.github.io/portfolio/projects.html">Portfolio Hub</a>
+    <nav class="top-actions" aria-label="Project links">
+      <a class="ghost-button" id="repo-link" href="#">Repository</a>
+      <a class="ghost-button" id="architecture-link" href="#">Architecture</a>
+      <a class="ghost-button" id="portfolio-link" href="#">Portfolio Hub</a>
     </nav>
   </header>
 
-  <main class="site-shell">
+  <main class="shell">
     <section class="hero" aria-labelledby="project-title">
       <div>
-        <p class="eyebrow">AI Compliance / Iteration</p>
+        <p class="eyebrow" id="category">Live Project</p>
         <h1 id="project-title">Infosys Compliance Checker V2</h1>
-        <p class="summary">A second-version compliance checker that builds on the RAG workflow with clearer production documentation and interview-ready system framing.</p>
-        <div class="actions">
-          <a class="button primary" href="https://github.com/cloudy-fix/assignment-3-infosys">View Repository</a>
-          <a class="button" href="https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/ARCHITECTURE.md">Read Architecture</a>
-          <a class="button" href="https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/diagrams/workflow.mmd">Open Workflow</a>
+        <p class="mission" id="mission">Loading project workspace...</p>
+        <div class="hero-actions">
+          <a class="button" id="repo-link-2" href="#">Open Source Repo</a>
+          <a class="ghost-button" href="#workspace">Use Live Workspace</a>
         </div>
-        <div class="meta-strip" aria-label="Project facts">
-          <div class="meta-card">
-            <span>Visibility</span>
-            <strong>Public</strong>
-          </div>
-          <div class="meta-card">
-            <span>Repository</span>
-            <strong>assignment-3-infosys</strong>
-          </div>
-          <div class="meta-card">
-            <span>Showcase</span>
-            <strong>GitHub Pages ready</strong>
-          </div>
-        </div>
+        <div class="metric-grid" id="metric-grid" aria-label="Project metrics"></div>
       </div>
 
-      <div class="visual-wrap" aria-label="Glass architecture model">
-        <div class="halo" aria-hidden="true"></div>
-        <div class="glass-model" aria-hidden="true">
-          <div class="pane one"></div>
-          <div class="pane two"></div>
-          <div class="pane three"></div>
+      <div class="visual" aria-label="Production glass model">
+        <div class="glass-base" aria-hidden="true"></div>
+        <div class="glass-stack" aria-hidden="true">
+          <span class="glass-layer one"></span>
+          <span class="glass-layer two"></span>
+          <span class="glass-layer three"></span>
         </div>
-        <div class="model-label">
-          <strong>Architecture showcase</strong>
-          <span>Layered project view for stack, workflow, proof points, and production documentation.</span>
+        <div class="runtime-card">
+          <strong>Production project surface</strong>
+          <span id="runtime-note">Loading runtime details...</span>
         </div>
       </div>
     </section>
 
-    <section class="grid-two" aria-label="Project proof">
-      <article class="panel">
-        <h2 class="section-title">Interview Story</h2>
-        <p>This is the iteration story: it shows how a prototype can mature into a cleaner compliance review workflow.</p>
-        <ul>
-            <li>Positions the checker as a more mature version of the V1 workflow.</li>
-            <li>Documents what to discuss, demonstrated skills, and improvement areas.</li>
-            <li>Supports interview discussion around AI product iteration.</li>
-        </ul>
-      </article>
-
-      <article class="panel">
-        <h2 class="section-title">Stack Signals</h2>
-        <p>The page is shaped to help a reviewer quickly understand the role, technical surface, and discussion points for this repository.</p>
-        <div class="stack-list">
-            <span>Python</span>
-            <span>RAG</span>
-            <span>Compliance Automation</span>
-            <span>App Scripts</span>
+    <section id="workspace" aria-labelledby="workspace-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Individual Repository Link</p>
+          <h2 id="workspace-title">Live Project Workspace</h2>
         </div>
-      </article>
-    </section>
-
-    <section aria-labelledby="workflow-title">
-      <div class="panel">
-        <h2 class="section-title" id="workflow-title">Core Workflow</h2>
-        <ol class="workflow">
-            <li><strong>01</strong><span>Input documents are accepted for review.</span></li>
-            <li><strong>02</strong><span>Compliance references are matched to review sections.</span></li>
-            <li><strong>03</strong><span>The checker produces structured observations.</span></li>
-            <li><strong>04</strong><span>The documentation frames the next production improvements.</span></li>
-        </ol>
+        <p>This page is tailored to the actual repository workflow, with browser-side controls where a static host can run them and direct links to the production source.</p>
+      </div>
+      <div class="workspace">
+        <div id="demo-root"></div>
+        <aside id="side-root"></aside>
       </div>
     </section>
 
-    <section class="docs-band" aria-labelledby="docs-title">
-      <h2 id="docs-title">Production Review Pack</h2>
-      <p>Each repository includes documentation and diagrams so interviewers can review architecture, operations, and workflow without guessing how the project is meant to run.</p>
-      <div class="doc-links">
-        <a href="https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/ARCHITECTURE.md">Architecture document</a>
-        <a href="https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/OPERATIONS.md">Operations guide</a>
-        <a href="https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/diagrams/workflow.mmd">Workflow diagram</a>
-        <a href="https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/diagrams/architecture.mmd">Architecture diagram</a>
+    <section aria-labelledby="system-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Stack and System Map</p>
+          <h2 id="system-title">Production Readiness</h2>
+        </div>
+        <p>The repository keeps the implementation, architecture, operations guide, workflow diagram, and security notes together for interview review.</p>
       </div>
+      <div class="workspace">
+        <article class="panel">
+          <h3>Technology Stack</h3>
+          <div class="stack-list" id="stack-list"></div>
+        </article>
+        <article class="panel">
+          <h3>Runtime Components</h3>
+          <div class="status-list" id="component-list"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="dark-band" aria-labelledby="docs-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Review Pack</p>
+          <h2 id="docs-title">Architecture, Workflow, Operations</h2>
+        </div>
+        <p>Use these links to inspect the exact project files behind this live page.</p>
+      </div>
+      <div class="doc-grid" id="doc-grid"></div>
     </section>
   </main>
 
-  <footer class="site-shell footer">
-    <span>Generated for Hariharan J project showcase on 2026-07-14. Source repo: assignment-3-infosys.</span>
+  <footer class="shell footer">
+    <span>Live project page for <strong id="footer-repo">repository</strong>. Updated for production review in <span id="footer-date">2026</span>.</span>
   </footer>
+
+  <script src="assets/project.js"></script>
 </body>
 </html>

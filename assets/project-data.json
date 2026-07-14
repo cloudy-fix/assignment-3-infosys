@@ -1,0 +1,91 @@
+﻿{
+    "accentTwo":  "#dc2626",
+    "stack":  [
+                  "Python",
+                  "LLM-assisted Review",
+                  "RAG Workflow",
+                  "Risk Controls",
+                  "Contract Analysis"
+              ],
+    "docs":  [
+                 {
+                     "label":  "Repository",
+                     "url":  "https://github.com/cloudy-fix/assignment-3-infosys",
+                     "note":  "Source, commits, issues, and project files"
+                 },
+                 {
+                     "label":  "Architecture",
+                     "url":  "https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/ARCHITECTURE.md",
+                     "note":  "System design and responsibilities"
+                 },
+                 {
+                     "label":  "Operations",
+                     "url":  "https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/OPERATIONS.md",
+                     "note":  "Runbook and deployment notes"
+                 },
+                 {
+                     "label":  "Workflow Diagram",
+                     "url":  "https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/diagrams/workflow.mmd",
+                     "note":  "End-to-end process map"
+                 },
+                 {
+                     "label":  "Architecture Diagram",
+                     "url":  "https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/diagrams/architecture.mmd",
+                     "note":  "Component-level diagram"
+                 }
+             ],
+    "demoType":  "compliance",
+    "highlights":  [
+                       "Shows iteration from V1 to V2",
+                       "Produces structured compliance status",
+                       "Supports interviewer discussion on validation limits"
+                   ],
+    "title":  "Infosys Compliance Checker V2",
+    "category":  "AI Compliance Iteration",
+    "components":  [
+                       "Input document",
+                       "Review controls",
+                       "Risk engine",
+                       "Findings table",
+                       "Operations docs"
+                   ],
+    "repo":  "assignment-3-infosys",
+    "runtime":  "The Pages app runs the review console while the repo holds the Python project source and production documentation.",
+    "sample":  {
+                   "riskyText":  "The parties agree to collaborate. No data protection, liability cap, law, payment timeline, or termination terms are defined.",
+                   "controls":  [
+                                    "Confidentiality",
+                                    "Termination",
+                                    "Liability",
+                                    "Data protection",
+                                    "Governing law",
+                                    "Payment terms"
+                                ],
+                   "text":  "This agreement includes confidentiality, data protection, governing law, limitation of liability, payment terms, and termination notice."
+               },
+    "accent":  "#0891b2",
+    "visibility":  "Public",
+    "mission":  "A cleaner V2 compliance checker surface focused on document analysis, LLM-assisted review, and risk-focused contract interpretation.",
+    "metrics":  [
+                    {
+                        "label":  "Version",
+                        "detail":  "Improved review framing",
+                        "value":  "V2"
+                    },
+                    {
+                        "label":  "Controls",
+                        "detail":  "Commercial and legal coverage",
+                        "value":  "6 core checks"
+                    },
+                    {
+                        "label":  "Focus",
+                        "detail":  "Clear reviewer output",
+                        "value":  "Risk first"
+                    }
+                ],
+    "links":  {
+                  "pages":  "https://cloudy-fix.github.io/assignment-3-infosys/",
+                  "portfolio":  "https://cloudy-fix.github.io/portfolio/projects.html",
+                  "repo":  "https://github.com/cloudy-fix/assignment-3-infosys"
+              }
+}
